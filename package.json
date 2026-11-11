@@ -1,0 +1,11 @@
+{
+  "name": "chuzhoy-tron",
+  "version": "1.0.0",
+  "description": "Чужой трон — мини-шахматы 4×4 с полностью решённой таблицей позиций",
+  "private": true,
+  "license": "UNLICENSED",
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "node --test tests/*.test.cjs"
+  }
+}

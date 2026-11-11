@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#14161f">
+  <meta name="description" content="Чужой трон — мини-шахматы 4×4: король, ладья и страж. Посади короля на трон соперника и переживи один ответный ход. Игра решена полностью: при точной игре — ничья.">
+  <title>Чужой трон — мини-шахматы 4×4</title>
+  <style>/* STYLES */</style>
+</head>
+<body>
+  <header class="top">
+    <div class="brand"><span class="brand-mark" aria-hidden="true">♚</span><div><h1>Чужой трон</h1><p>Мини-шахматы 4×4</p></div></div>
+    <button class="ghost" id="rules-button" type="button">Правила</button>
+  </header>
+
+  <main class="layout">
+    <section class="table" aria-label="Игровое поле">
+      <div class="player" id="top-player"></div>
+      <div class="board-wrap">
+        <div class="ranks" id="ranks" aria-hidden="true"></div>
+        <div class="board" id="board" role="group" aria-label="Доска 4 на 4"></div>
+        <div class="files" id="files" aria-hidden="true"></div>
+      </div>
+      <div class="player" id="bottom-player"></div>
+      <p class="legend"><span class="item"><span class="swatch goal-w" aria-hidden="true"></span>троны чёрных — цель белых</span><span class="item"><span class="swatch goal-b" aria-hidden="true"></span>троны белых — цель чёрных</span></p>
+      <div class="tools">
+        <button id="undo" type="button">↶ Назад</button>
+        <button id="flip" type="button">⇅ Повернуть</button>
+        <button id="new-game" type="button" class="primary">Новая игра</button>
+      </div>
+    </section>
+
+    <aside class="side">
+      <section class="card status" aria-live="polite" aria-atomic="true">
+        <p class="eyebrow" id="status-label"></p>
+        <h2 id="status-title"></h2>
+        <p id="status-text"></p>
+        <button id="play-again" type="button" class="primary" hidden>Сыграть ещё</button>
+      </section>
+
+      <section class="card">
+        <label class="switch"><input type="checkbox" id="show-eval"> <span>Показывать точную оценку</span></label>
+        <p class="verdict" id="verdict" hidden></p>
+        <p class="note" id="table-status"></p>
+      </section>
+
+      <section class="card">
+        <div class="card-head"><h3>Ходы</h3><span class="note" id="session"></span></div>
+        <ol class="moves" id="moves" aria-label="Запись партии"></ol>
+        <p class="note" id="moves-note"></p>
+      </section>
+    </aside>
+  </main>
+
+  <footer class="foot"><span>Партия сохраняется в этом браузере.</span><span>Игра решена: 1 046 490 позиций, при точной игре — ничья.</span></footer>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <dialog id="setup-dialog" aria-labelledby="setup-title">
+    <form id="setup-form" method="dialog">
+      <h2 id="setup-title">Новая партия</h2>
+      <label for="mode">Соперник</label>
+      <select id="mode"><option value="bot">Компьютер</option><option value="local">Второй игрок за этим устройством</option></select>
+      <div id="bot-settings">
+        <label for="color">Ваш цвет</label>
+        <select id="color"><option value="w">Белые — ходят первыми</option><option value="b">Чёрные</option></select>
+        <label for="level">Уровень</label>
+        <select id="level"></select>
+        <p class="note" id="level-note"></p>
+      </div>
+      <div class="dialog-actions"><button type="button" class="ghost" data-close="setup-dialog">Отмена</button><button type="submit" class="primary">Начать</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="rules-dialog" aria-labelledby="rules-title">
+    <h2 id="rules-title">Правила</h2>
+    <ol class="rules">
+      <li><strong>Фигуры.</strong> У каждого король, ладья и страж. Король ходит на одну клетку в любую сторону. Ладья — по прямой на одну или две клетки, через фигуры не прыгает. Страж ходит как король, но это обычная фигура: его можно взять.</li>
+      <li><strong>Троны.</strong> У белых троны b2 и c2, у чёрных — b3 и c3. Свой трон ничего не даёт: побеждают на чужом.</li>
+      <li><strong>Победа троном.</strong> Поставь короля на трон соперника. Если после его ответа твой король всё ещё там и не под шахом — ты победил. Сорвать захват можно только шахом.</li>
+      <li><strong>Мат</strong> — тоже победа. Ходить под шах нельзя, королей не берут.</li>
+      <li><strong>Одни короли</strong> — не ничья: партия продолжается, короли бегут к тронам.</li>
+      <li><strong>Ничья:</strong> пат, троекратное повторение позиции или 40 полуходов подряд без взятия.</li>
+    </ol>
+    <p class="note">Игра просчитана полностью. При безошибочной игре обеих сторон получается ничья, и цвет не даёт преимущества. Включи «точную оценку», чтобы видеть, какие ходы надёжны.</p>
+    <div class="dialog-actions"><button type="button" class="primary" data-close="rules-dialog">Понятно</button></div>
+  </dialog>
+
+  <script id="engine-code">/* ENGINE */</script>
+  <script id="solver-code">/* SOLVER */</script>
+  <script>/* BOT */</script>
+  <script>/* APP */</script>
+</body>
+</html>
